@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#141217"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>早紀・変貌シミュレーター 2.0</title><link rel="icon" href="data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="%2328202d"/><circle cx="32" cy="32" r="23" fill="none" stroke="%23f1ce83" stroke-width="2"/><text x="32" y="41" text-anchor="middle" font-size="31" font-family="Georgia,serif" fill="%23f1ce83">S</text></svg>">
+<style>
+:root{color-scheme:dark;--bg:#121014;--panel:#211d23;--panel2:#29232a;--line:#463841;--text:#faf3f3;--sub:#c2b3bd;--gold:#f1ce83;--rose:#f0a5ba;--violet:#9e78b3;--green:#8adeb3}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse 130% 340px at 50% -110px,#533540 0,transparent 75%),var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Yu Gothic',sans-serif;color:var(--text);font-size:14px;line-height:1.5}button,input,textarea,select{font:inherit}button{touch-action:manipulation}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+main{max-width:760px;margin:auto;padding:0 14px 112px}.top{padding:27px 4px 16px}.kicker{font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:700}.brand{font-size:26px;line-height:1.25;letter-spacing:.02em;font-weight:800;margin:6px 0}.subtitle{font-size:12px;color:var(--sub)}.intro{margin-top:14px;padding:13px 15px;border:1px solid #62434f;background:#281d26;border-radius:16px;font-size:12px;color:#e9dbe2}.stats{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.stat{background:#302630;border:1px solid #5d4550;padding:6px 9px;border-radius:30px;font-size:11px;color:#ead3df}.stat b{color:var(--gold)}
+.switcher{display:flex;gap:8px;margin:4px 0 16px}.switcher button{flex:1;padding:13px 8px;border-radius:13px;border:1px solid #61515b;background:#252027;color:#e0d3df;font-weight:800;cursor:pointer}.switcher button.active{background:linear-gradient(120deg,#5e394f,#a06376);border-color:#c78ba3;color:#fff}.section{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:15px;margin:12px 0;box-shadow:0 5px 18px #00000015}.section h2{font-size:17px;margin:0 0 12px}.section h3{font-size:14px;margin:14px 0 9px;color:#ead3db}.hint{font-size:12px;color:var(--sub);margin:5px 0 12px}.chips{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.chip{padding:8px 12px;min-height:38px;border-radius:13px;background:#302831;border:1px solid #534650;color:#ebdfeb;font-size:12px;cursor:pointer}.chip.active{background:#674254;border-color:#e3a7ba;color:#fff}.row{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.small{font-size:11px;color:var(--sub)}.muted{color:var(--sub)}.line{height:1px;background:var(--line);margin:14px 0}.primary{display:block;width:100%;background:linear-gradient(115deg,#f1cf86,#e5aa9e);color:#291b20;border:none;border-radius:15px;padding:14px 12px;font-weight:900;font-size:15px;cursor:pointer;box-shadow:0 5px 20px #b3785b30}.secondary{background:#392d38;color:#f7e1e7;border:1px solid #795765;padding:10px 12px;border-radius:11px;font-weight:700;cursor:pointer}.ghost{background:none;border:none;color:#e8bfcf;padding:8px;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.tile{background:#29232b;border:1px solid #4b3e48;min-width:0;border-radius:13px;overflow:hidden;text-align:left;color:var(--text);padding:0;cursor:pointer;position:relative}.tile.selected{border:2px solid #f5c9a4;box-shadow:0 0 0 1px #d38e9c}.tile .thumb{aspect-ratio:4/5;overflow:hidden;background:#352e38;position:relative}.tile .thumb img{width:100%;height:100%;object-fit:cover;display:block}.tile .name{display:block;padding:8px 7px 4px;font-size:12px;font-weight:700;line-height:1.5;min-height:38px}.tile .code{display:inline-block;margin-right:4px;color:var(--gold)}.tile .check{position:absolute;right:7px;top:7px;background:#f6d9ae;color:#251923;border-radius:25px;padding:3px 7px;font-weight:900;font-size:11px}.tile .desc{display:block;padding:0 7px 8px;font-size:10px;color:var(--sub)}.thumb.art{display:flex;align-items:center;justify-content:center}.thumb.art svg{height:100%;width:100%}.photo-credit{position:absolute;right:4px;bottom:4px;font-size:9px;background:#100c11c9;border-radius:5px;padding:2px 5px;color:#fff}.refpanel{margin-top:8px;color:#dac2ce;font-size:11px}
+label{font-size:12px;display:block;color:#e3cdd7;font-weight:700;margin:8px 0 6px}input[type=range]{width:100%;accent-color:#e9b6a6;height:26px}.num{font-variant-numeric:tabular-nums;color:var(--gold);font-weight:800}select,input[type=text],input[type=search],textarea{display:block;width:100%;border-radius:10px;border:1px solid #69545f;color:#fff;background:#302831;padding:11px;font-size:13px;outline:none}textarea{min-height:68px;resize:vertical}input[type=file]{width:100%;font-size:12px}.control{margin:10px 0 14px}.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.stg{border:1px solid #654b57;background:#2e2630;color:#eedde5;border-radius:12px;padding:11px 4px;min-height:50px;font-size:12px;font-weight:750;cursor:pointer}.stg.active{background:#75485a;border:2px solid var(--gold);color:#fff}.sceneitem{padding:11px 12px;border-radius:12px;background:#302831;border:1px solid #54444d;text-align:left;color:#f2e4ed;width:100%;margin-bottom:7px;cursor:pointer}.sceneitem.active{background:#4c3441;border-color:#edb6ba}.sceneitem strong{font-size:13px}.sceneitem small{display:block;color:#c9b7c2;margin-top:4px;font-size:11px}.previewline{display:grid;grid-template-columns:64px 1fr;align-items:start;gap:9px;padding:8px 0;border-bottom:1px solid #463943}.previewline:last-child{border:0}.previewline .k{color:#cab0be;font-size:11px;padding-top:2px}.previewline .v{font-size:12px;font-weight:600;word-break:break-word}.notes{font-size:11px;color:#baa7b5}.footer{font-size:11px;color:#9f8c98;text-align:center;margin:15px}.footer a{color:#e9bccc}.bottom{position:fixed;bottom:0;left:0;right:0;background:#1b161deF;border-top:1px solid #765466;backdrop-filter:blur(15px);z-index:20;display:flex;justify-content:center;padding:7px 4px calc(8px + env(safe-area-inset-bottom))}.bottomInner{display:flex;width:min(760px,100%);overflow-x:auto;gap:3px;scrollbar-width:none}.nav{flex:1 0 auto;min-width:60px;max-width:115px;padding:5px 4px;border:0;border-radius:9px;background:transparent;color:#bcabb6;display:grid;justify-items:center;gap:1px;font-size:10px;font-weight:600;cursor:pointer}.nav b{font-size:19px;font-weight:400}.nav.active{color:#ffdfb1;background:#4f3342}.hidden{display:none!important}.notice{border-radius:12px;border:1px solid #695264;background:#352532;padding:9px 12px;font-size:11px;color:#ebd5df}.refphoto{width:100%;max-height:160px;object-fit:contain;border-radius:10px;margin-top:8px}.copyfield{white-space:pre-wrap;max-height:310px;overflow:auto;overflow-wrap:anywhere;background:#120f13;border:1px solid #4c3b47;padding:12px;border-radius:11px;font-size:11px;line-height:1.65}.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button{flex:1}.subhead{font-weight:800;color:#efd4dc;font-size:14px;margin:16px 0 10px}.feat{display:flex;gap:8px;align-items:center;font-size:12px}.feat b{color:#f4dcae}
+@media(max-width:365px){.brand{font-size:23px}.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}.nav{min-width:50px}.stages{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* FINAL: offline-first, fast-tap touch targets, low-cost rendering */
+.primary,.secondary,.chip,.nav,.stg,.tile,.sceneitem{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.primary:active,.secondary:active,.chip:active,.nav:active,.stg:active,.tile:active{transform:scale(.985)}
+.output-mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.output-mode button{border:1px solid #765863;background:#30262d;padding:13px 7px;min-height:56px;border-radius:14px;color:#f1e7eb;font-weight:800;cursor:pointer}
+.output-mode button.active{border:2px solid #e9c58a;background:#674556}
+.warn{padding:11px;border-radius:12px;border:1px solid #ba8969;background:#402b29;color:#ffe3c4;margin:8px 0;font-size:12px;line-height:1.6}
+.ok{padding:10px 12px;border-radius:12px;border:1px solid #538679;background:#18322d;color:#c6f4df;margin:8px 0;font-size:12px}
+.launch{margin:12px 0 4px;background:#221a23;border:1px solid #684959;border-radius:14px;padding:12px;font-size:12px;color:#dbc9d4}
+.compact-note{font-size:12px;color:#d9c2d0;margin:8px 0}
+.catalog-card{border:1px solid #56434e;border-radius:13px;overflow:hidden;background:#29232b;min-width:0}.catalog-card.selected{outline:2px solid #f5c9a4}.catalog-card .tile{width:100%;border:0;border-radius:0}.photo-thumb{background:#302830;display:flex;align-items:center;justify-content:center}.photo-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#d8c3cf;height:100%;font-size:32px}.photo-empty small{font-size:11px}.photo-upload{display:block;margin:0;padding:9px 6px;border-top:1px solid #51404c;font-size:10px;text-align:center;color:#f3d4dd;cursor:pointer}.photo-upload input{display:none}.bottomInner{scrollbar-width:thin}.nav{min-width:68px} </style></head><body><main>
+<header class="top"><div class="kicker">SAKI TRANSFORMATION STUDIO</div><h1 class="brand">早紀・変貌シミュレーター <span style="color:var(--gold)">2.0</span></h1><div class="subtitle">物語とは独立した、画像生成プロンプトの精密実験室。</div><div class="stats"><span class="stat"><b>82</b> 衣装</span><span class="stat"><b>252</b> 場面</span><span class="stat"><b>16</b> ヘア</span><span class="stat"><b>16</b> 髪色</span><span class="stat"><b>8</b> メイク</span></div></header>
+<div class="switcher"><button type="button" id="btnAuto">⚡ オートモード</button><button type="button" id="btnManual">✦ マニュアルモード</button></div>
+<div class="launch">🎯 <strong>目的：プロンプト検証専用。</strong> 「📍場面」から252場面を選択可能。まず「背景なし」で人物を確認し、必要な場合だけ「場面」を追加。タップした設定以外の物語的な補正をしません。</div><div id="view"></div><div class="footer">設定はこの端末に自動保存。参考画像は端末内プレビューのみ。<br>カタログ写真は端末内保存。未登録は写真未登録と表示します。</div>
+</main><nav class="bottom" aria-label="編集カテゴリ"><div class="bottomInner" id="nav"></div></nav>
+<script>
+'use strict';
+const O={};function addOut(g,data){for(const r of data.split('\n').filter(Boolean)){const [id,name]=r.split('|');O[id]={id,name,group:g,type:id[0]==='P'?'casual':id[0]==='D'?'dress':'suit'};}}
+addOut('day',`P01|黒Vニット×黒地の赤・ピンク・白の大花柄ミディ丈タイトスカート
+P02|淡青カーデ×花柄キャミ×白パンツ
+P03|黒深Vニット×黒の細身パンツ
+P04|花柄ブラウス×黒ペンシルスカート
+P05|白ブラウス×黒膝丈タイトスカート
+P06|黒カーデ×花柄ワンピース`);
+addOut('night',`P07|黒サテンシャツ×白タイトミニ
+P08|黒ノースリーブタイトワンピース
+P09|レオパード柄ブラウス×黒パンツ
+P10|黒レーストップス×白タイトミニ
+P11|ゼブラ柄ブラウス×黒スカート
+P12|黒サテンキャミ×黒カーデ×黒パンツ`);
+addOut('elegant',`P13|黒カシュクールニット×ベージュタイトロング
+P14|ボルドーサテンブラウス×黒ミディ
+P15|アイボリーリブニット×黒レザースカート
+P16|紺ボウタイブラウス×白パンツ
+P17|黒シアー袖ニット×グレーペンシル
+P18|ダークブラウンのリブニットワンピース
+P19|黒ショートジャケット×白インナー×黒ロングスカート
+P20|グレージュサテンシャツ×濃紺スリムパンツ`);
+addOut('glam',`P21|黒トップス×赤薔薇柄タイトミディ
+P22|黒金チェーン柄サテンブラウス×黒パンツ
+P23|黒ニット×レオパード柄タイトミディ
+P24|黒サテンシャツ×深紅タイトミニ
+P25|紫タイトニット×黒レザースカート
+P26|パイソン柄ブラウス×黒パンツ
+P27|白タイトニット×大花柄ミディスカート
+P28|黒サテンキャミ×ゴールドチェーン柄ロング`);
+addOut('relax',`P29|グレー薄手カーデ×黒ストレートパンツ
+P30|白無地Tシャツ×濃紺デニム
+P31|黒ゆったりニット×グレーレギンス
+P32|ベージュリブカットソー×黒ワイドパンツ
+P33|黒パーカー×グレージョガーパンツ
+P34|ネイビーロングカーデ×白インナー×黒パンツ`);
+addOut('outer',`P35|黒ロングコート×黒ニット×黒スカート
+P36|白ロングコート×黒タイトワンピース
+P37|黒レザージャケット×大花柄タイトスカート
+P38|ベージュトレンチ×黒ニット×黒パンツ
+P39|黒ショートダウン×細身デニム
+P40|アイボリーショートジャケット×黒地大花柄ロング`);
+addOut('black',`01|黒サテンテーラードスーツ
+02|黒ベルベットスーツ
+03|黒ノーカラー×パールボタンスーツ
+04|黒ダブルジャケット×タイトミニ
+05|黒×白パイピングスーツ
+06|黒×金チェーン柄アシンメトリー
+07|黒ストライプ×フリルシャツスーツ
+08|黒ジャケット×青スカーフボウタイ
+09|黒ペプラムジャケット×タイトミニ
+10|黒レース袖ジャケットスーツ`);
+addOut('white',`11|白サテンジャケットスーツ
+12|白×黒パイピングスーツ
+13|白ジャケット×大花柄タイトスカート
+14|白ツイード×タイトミニスーツ
+15|アイボリー×黒レーススーツ`);
+addOut('colored',`16|濃紫サテンキャバ嬢スーツ
+17|ボルドージャケットスーツ
+18|ネイビーサテンセットアップ
+19|赤黒リングベルトスーツ
+20|レオパード柄×黒ジャケットスーツ
+21|黒×ゴールドチェーンプリントスーツ
+22|エメラルドグリーンサテンスーツ
+23|濃紺×大花柄スーツ
+24|濃紫サテン×黒レーススーツ
+25|深紅×黒大花柄スーツ
+26|白サテン×ゴールドチェーンスーツ`);
+addOut('plain',`D01|黒サテンマーメイド
+D02|深紅サテンタイト
+D03|ロイヤルブルーサテン
+D04|ワインレッド深スリット
+D05|黒ドレープネック
+D06|シャンパンゴールドサテン
+D07|黒シフォンノースリーブ
+D08|紫サテンマーメイド`);
+addOut('pattern',`D09|黒地大花柄タイト
+D10|レオパード柄マーメイド
+D11|黒金チェーン柄タイト
+D12|黒×赤薔薇柄
+D13|濃紫×黒レース
+D14|パイソン柄タイト
+D15|ブラックビジュータイト
+D16|黒シアー袖×レース`);
+const H={};function addH(group,str){str.split('\n').filter(Boolean).forEach(x=>{let [id,name]=x.split('|');H[id]={id,name,group}})}
+addH('daily',`H01|自然なストレートロング・前髪あり
+H02|斜め分けの艶ストレート
+H03|毛先だけ内巻きロング
+H04|自然なゆる巻きロング
+H05|低い位置のひとつ結び
+H06|ストレートミディアム
+H07|普段用ハーフアップ
+H08|かき上げ前髪ロング`);
+addH('club',`S01|トップ高めのホステスブロー
+S02|グラマラス外巻きロング
+S03|盛りハーフアップ
+S04|トップ盛りストレート
+S05|現代的な夜会巻き
+S06|サイドダウン巻き髪
+S07|盛りポニーテール
+S08|フルボリューム巻き下ろし`);
+const COLORS=[['C01','ナチュラルブラック','#171519'],['C02','ソフトブラック','#262126'],['C03','ダークチョコブラウン','#3a2523'],['C04','ダークブラウン','#49302a'],['C05','ナチュラルブラウン','#634439'],['C06','レッドブラウン','#8a4a35'],['C07','キャラメルブラウン','#a96839'],['C08','オレンジブラウン','#b8763f'],['C09','ライトブラウン','#ba8b51'],['C10','ゴールドブラウン','#ca9c4c'],['C11','ハニーゴールド','#ddb154'],['C12','ゴールデンブロンド','#ecc255'],['C13','イエローゴールド','#efd14f'],['C14','ライトゴールド','#f4dc72'],['C15','ブリーチイエロー','#f8df4c'],['C16','シャンパンゴールド','#e6cf81']];
+const makeupPresets=[['M01','ナチュラル',[2,2,2,2,2,3,3]],['M02','夜職初日',[4,4,5,5,5,5,4]],['M03','染まりかけ',[7,6,7,7,7,7,5]],['M04','王道ホステス',[9,8,9,9,9,8,5]],['M05','ブルー極濃',[9,9,10,10,10,9,6]],['M06','大人ローズ',[8,7,8,8,9,9,7]],['M07','夜職全開',[10,9,10,10,10,10,8]],['M08','艶グリッター',[8,7,8,8,9,8,8]]];
+const ADDONS={tattoo:[['T00','なし'],['T01','右肩の黒い和彫り筋彫り開始'],['T02','右肩に部分的な色入れ'],['T03','右肩色入り完成・背中は筋彫り'],['T04','右肩から背中の色入り和彫り完成'],['T05','右肩色入り・背中筋彫り・腰に小さな紺色の蝶']],jewelry:[['A00','装飾なし'],['A01','小ぶりのシルバーピアス'],['A02','小さなCCモチーフピアス'],['A03','ラインストーンの揺れるピアス'],['A04','細いゴールドネックレスとピアス'],['A05','華やかなビジューイヤリングとネックレス'],['A06','パールピアスと細いネックレス']],shoes:[['SH01','黒ポインテッドハイヒール'],['SH02','黒エナメルピンヒール'],['SH03','ゴールドストラップサンダル'],['SH04','白ポインテッドパンプス'],['SH05','赤エナメルハイヒール'],['SH06','黒厚底プラットフォームヒール'],['SH07','シルバーラメハイヒール'],['SH08','黒ロングブーツ'],['SH09','白スニーカー'],['SH10','黒フラットシューズ']],nails:[['N00','自爪・ネイルなし'],['N01','短めピンクベージュ'],['N02','赤ロングネイル'],['N03','黒ロングネイル'],['N04','ゴールドラメロング'],['N05','紫グラデーションロング'],['N06','白フレンチネイル'],['N07','黒×ゴールドストーン'] ]};
+// 15カテゴリ×12場面。3項目は名称 / 背景 / 動作。
+const SCENES=[];function gscene(id,label,icon,cam,data){const items=data.split('\n').filter(Boolean).map((r,i)=>{const a=r.split('|');return {id:id+'-'+i,group:id,name:a[0],place:a[1],action:a[2],camera:cam}});SCENES.push({id,label,icon,items})}
+gscene('home','朝・自宅','🏠','夫視点、室内の自然なiPhoneスナップ',`朝7時のキッチン|朝7時、名取市の戸建て住宅のキッチン|朝食の皿を並べて手を止める
+換気扇の下|昼前の自宅キッチン、換気扇の下|片手にタバコを持ちスマホを見る
+洗面所の鏡|午前中の自宅洗面所|髪を整えて鏡をのぞく
+昼前のリビング|日の差す自宅リビング|ソファで営業スマホを見る
+洗濯物を干す|午前の自宅ベランダ|洗濯物をハンガーに掛ける
+玄関で外出準備|昼の戸建て住宅の玄関|バッグを肩に掛けて靴を履く
+食卓の営業スマホ|午前11時のダイニング|コーヒーの横でメッセージを読む
+冷蔵庫の前|自宅キッチンの冷蔵庫前|飲み物を取り出す
+掃除の途中|午後の自宅リビング|掃除機を止めて着信を見る
+宅配便を受け取る|昼の自宅玄関|荷物を受け取り軽く会釈する
+昼食後のソファ|昼食後の明るいリビング|脚を組んでスマホを操作する
+庭先のひと休み|晴れた日の小さな庭|椅子に座って遠くを見る`);
+gscene('night','深夜の自宅','🌙','夫視点、暖色の家庭照明',`深夜の玄関帰宅|深夜1時40分の自宅玄関|静かに靴を脱ぐ
+帰宅直後のリビング|深夜2時、間接照明のリビング|濃いメイクのままソファに座る
+換気扇で点火|深夜のキッチン、換気扇の明かり|タバコに火をつける
+ソファで一服|深夜のリビング、灰皿のあるテーブル|脚を組んで煙を吐く
+帰宅後の電話|深夜の玄関付近|客からの電話に小声で答える
+鏡の中の仕事顔|深夜の洗面所|仕事メイクのまま鏡を見つめる
+ジャケットを脱ぐ|営業後の自宅リビング|ジャケットをソファの背に掛ける
+バッグの中身|深夜のダイニング|名刺と財布をバッグから出す
+眠れない午前3時|午前3時、静まり返ったリビング|窓際で外を眺める
+メイクを落とす前|深夜の洗面台|まつ毛を鏡で確認する
+寝室の入り口|深夜の暗い寝室の入口|静かにドアを開ける
+帰宅後のコーヒー|深夜のダイニング|マグカップを口に運ぶ`);
+gscene('cafe','カフェ・昼食','☕','向かいの席からの夫POV、自然光',`ドトール入店|昼のドトール入口|店内へ入り空席を探す
+窓際の一人席|昼のドトールの窓際|伏し目でスマホを確認する
+コーヒーを受け取る|昼のカフェのカウンター|コーヒーを受け取る
+夫とのカフェ|夫と向かい合うカフェの席|脚を組み夫の話を聞く
+営業LINEの返信|昼のドトールのテーブル|真顔でメッセージを入力する
+美容院帰りの休憩|午後のカフェ|染めた髪に触れてコーヒーを飲む
+友人に仕事を明かす|昼の喫茶店|友人と現在の仕事について話す
+美穂との初対面後|仙台市内のカフェ|美穂にスマホを見せる
+カウンター席|昼の駅前カフェ|頬杖をついて通りを見る
+ケーキとコーヒー|午後の喫茶店|フォークを持ち頷く
+雨の日のカフェ|雨の午後の窓際席|バッグを膝に置き外を見る
+店の先輩と昼食|国分町近くの飲食店|先輩の話を聞き食事する`);
+gscene('salon','美容院・変身','✂️','美容院スタッフまたは同行者のiPhone視点',`EARTHに入店|昼の名取市の美容院入口|扉を開け受付へ向かう
+カラー見本を見る|美容院のセット椅子、カラーチャート|明るい髪色を指さす
+初めてのカラー|美容院のカラー席|ケープ姿で鏡を見る
+シャンプー台|美容院のシャンプー台|目を閉じて髪を洗われる
+茶髪になった鏡前|カラー直後の美容院の鏡前|自分の髪を指で触れる
+茶髪初日の店外|昼の美容院出口|新しい髪色を気にして歩く
+金髪ブリーチ開始|美容院のカラー席|鏡越しに美容師の説明を聞く
+ブリーチ途中の確認|美容院の鏡前、カラー用ホイル|少し戸惑いながら色を確認する
+金髪カラー完成|ブロー直後の美容院|鮮やかな金髪を鏡で見つめる
+美容院を出る金髪|午後の美容院出口|金髪を手で整えて店を出る
+夜職用セットサロン|夕方の国分町のヘアセット店|セット中に鏡を見ている
+盛り髪完成直後|出勤前のヘアセット店|完成した髪を確認する`);
+gscene('prep','出勤準備','💄','メイク鏡の斜め横から、店スタッフのスナップ',`出勤前の洗面所|夕方の自宅洗面所|ファンデーションを塗る
+アイラインを引く|出勤前のメイク鏡|黒アイラインを引く
+マツエクを確認|化粧室の明るい鏡|長いまつ毛を確認する
+口紅を仕上げる|更衣室の化粧鏡|濃い口紅を塗る
+衣装選び|店の更衣室の衣装ラック前|黒と紫の衣装を見比べる
+スーツに着替える|国分町の店のロッカー室|タイトスカートを整える
+ドレスを確認|更衣室の全身鏡前|ドレスの裾を確認する
+ヒールを履く|更衣室のベンチ前|ハイヒールのストラップを留める
+アクセサリーをつける|メイクルームの鏡前|耳元にピアスをつける
+ロッカーの前|営業開始前のロッカー室|名刺入れを取り出す
+出勤直前の自撮り|更衣室の鏡前|鏡越しにスマホで撮影する
+フロアへ向かう扉|バックヤード出口|息を吸って扉へ向かう`);
+gscene('street','国分町・路上','🌆','歩道からのiPhone街角スナップ',`国分町に到着|夕暮れの国分町入口|人混みへ歩き出す
+雑居ビルの前|国分町の雑居ビル入口|看板を見上げて中へ入る
+店への早歩き|夜のネオンの歩道|ハイヒールで足早に歩く
+エレベーター待ち|雑居ビルのエレベーターホール|時刻を確認する
+国分町の狭い階段|雑居ビルの階段|手すりのそばを上がる
+雨の出勤|雨の国分町の歩道|傘を差して歩く
+人混みの中の金髪|夜8時の国分町|金髪を揺らして歩く
+交差点で信号待ち|仙台の夜の横断歩道|スマホを見て待つ
+店前で電話|夜の国分町のビル脇|客からの着信に応じる
+同僚との移動|夜の国分町の歩道|同僚と並んで歩く
+冬の国分町|冬の夜の国分町|コートの襟を押さえる
+営業後の路上|深夜1時半の国分町|疲れた表情で歩く`);
+gscene('back','店の待機室','🛋️','同僚のiPhone視点、控室の自然な照明',`黒ソファで待機|店の黒ソファ待機室|脚を組んでスマホを見る
+待機室でタバコ|営業中の控室|タバコを持ち伏し目になる
+先輩と雑談|先輩のいる待機室|相手の話に頷く
+スマホで客へ連絡|待機室のソファ|営業LINEを入力する
+メイク直し|控室の化粧鏡前|パフでファンデを重ねる
+ヘアセットを直す|控室の壁際の鏡|トップの髪を整える
+名刺を整理|待機室の小テーブル|名刺を確認する
+呼び出しを待つ|営業中の控室|扉を見て待機する
+先輩に相談|待機室のテーブル|先輩の助言を聞く
+疲れた終盤|閉店間近の待機室|目元を指で押さえる
+衣装の裾を直す|控室の黒ソファ前|タイトスカートを整える
+待機室の集合写真|数人の成人ホステスがいる控室|少しぎこちなく立つ`);
+gscene('floor','フロア接客','🥂','ボックス席の客目線、暖色LED',`初めての名刺交換|キャバクラの黒ソファ席|両手で名刺を差し出す
+客の隣に着席|営業中のボックス席|姿勢を整え斜めに座る
+相槌を打つ|暖色照明の接客席|顎に手を添えて頷く
+水割りを作る|ボトルの並ぶ黒テーブル|氷をトングで入れる
+乾杯する|グラスの並ぶボックス席|グラスを上げる
+客を迎える|フロアの入口|立ち上がって挨拶する
+隣で会話する|ボトル棚のあるボックス席|相手の方へ身体を向ける
+注文を確認|営業中の黒テーブル|メニューを見て確認する
+営業スマホを見せる|キャバクラのソファ席|スマホを客へ向ける
+常連客との会話|いつものボックス席|慣れた様子で話す
+接客中の横顔|黒ソファ席の横からの構図|客の話を聞き横を向く
+閉店前の最後の席|閉店間際のフロア|客に挨拶する`);
+gscene('staff','店の人間関係','👥','スタッフのiPhone視点',`ママとの面接|店の小さな事務所|履歴書を置いて説明を聞く
+初日の説明|営業前のフロア|ママの説明に頷く
+先輩から化粧の助言|更衣室の鏡前|先輩の助言を聞く
+先輩と衣装選び|バックヤードの衣装ラック|派手な衣装を見て迷う
+新人に声を掛ける|営業前の控室|新人に仕事内容を説明する
+美穂の体験入店|店の更衣室|美穂の衣装を整える
+同僚と休憩|営業中のバックヤード|紙コップを持ち会話する
+店長から呼び出し|店内のカウンター脇|腕を組んで説明を聞く
+売上表を見る|店の事務スペース|成績表を見つめる
+仕事終わりの笑い話|閉店後のフロア|同僚の冗談に笑う
+先輩のライター|喫煙可能な待機室|先輩のライターを借りる
+後輩にメイクを教える|更衣室の大きな鏡前|アイラインの描き方を教える`);
+gscene('escort','同伴・アフター','🍽️','同行者のiPhone視点',`初めての同伴|夜の仙台の飲食店入口|少し緊張して客と歩く
+居酒屋のテーブル|国分町の日本料理店|料理を取り分ける
+寿司店で同伴|寿司店の木製カウンター|隣の相手へ顔を向ける
+焼肉店で食事|焼肉店の個室|注文を相談する
+ホテルラウンジで待つ|仙台のホテルラウンジ|時計を確認する
+同伴後の店へ移動|夕方の国分町の歩道|客を店へ案内する
+客とタクシーを降りる|国分町のタクシー乗降場所|バッグを持って降りる
+アフターのバー|深夜のバーのカウンター|相手の話を聞く
+深夜ラーメン|営業後のラーメン店|レンゲを持ち食べる
+アフターの帰り道|深夜の国分町|客に手を振る
+同伴用の服を買う|国分町近くの婦人服店|服を鏡に当てる
+買った服で外出|夜の仙台の歩道|慣れない新しい服で歩く`);
+gscene('transport','送迎・移動','🚐','同乗者のiPhoneスナップ',`迎えの車を待つ|国分町の送迎車停車場所|スマホで連絡を確認する
+ハイエース乗車|送迎ハイエースのドア前|車内へ乗り込む
+送迎車の後部座席|深夜のハイエース後部席|脚を組みスマホを見る
+同僚の会話を聞く|送迎車内、同僚の隣|窓を見て相槌を打つ
+車内の化粧直し|送迎車内の小さな照明|手鏡で口紅を確認する
+窓に映る金髪|深夜の送迎車内|窓に映る自分を見る
+スマホで夫に連絡|営業終了後の車内|帰宅連絡を送る
+国道を走る車内|仙台から名取への車内|街明かりを眺める
+住宅地へ到着|深夜の名取市の住宅地|降りる準備をする
+送迎車から降りる|静かな住宅地の路肩|車を降りて会釈する
+玄関へ歩く|深夜の戸建て駐車場|玄関へ向かう
+車内で一人になる|停車中の自家用車|バッグからスマホを出す`);
+gscene('pov','夫視点','📱','夫POV、iPhone縦9:16',`美容院帰りを迎える|昼の美容院前|髪色を変えて歩いてくる
+カフェで向かい合う|夫と向かい合うドトール|脚を組んで夫の話を聞く
+初日のスーツ姿|出勤前の自宅玄関|ぎこちなく衣装を見せる
+金髪になった翌朝|朝の自宅リビング|金髪でスマホを眺める
+深夜の帰宅を迎える|深夜の玄関、夫が扉の内側|濃いメイクで帰宅する
+換気扇のそばに立つ|夜の自宅キッチン|振り返らず夫と話す
+リビングの対面席|休日のダイニング|脚を組み夫の話を聞く
+新しいドレスを見せる|夕方の寝室の姿見|新しいドレスの感想を尋ねる
+帰宅後の横顔|深夜のソファ|疲れた顔でグラスを持つ
+初めての刺青を見る|明るい自宅リビング|右肩の刺青を少し見せる
+店のHPを一緒に見る|夜のダイニング|キャスト写真を指さす
+出勤する背中|夕暮れの自宅玄関|振り返って外へ出る`);
+gscene('family','学校・友人','👩‍👧','自然な行事スナップ、周囲のプライバシーに配慮',`幼稚園の授業参観|昼の幼稚園教室後方|授業を見守る
+保護者の廊下|授業参観後の廊下|周囲と少し距離を取る
+一人だけ声を掛ける|幼稚園玄関付近|美穂に声を掛けられ振り返る
+授業参観から帰る|幼稚園正門付近|一人で歩いて帰る
+学校行事の受付|学校の昇降口|受付用紙に記入する
+ママ友とスーパー|昼のスーパー入口|少し気まずく挨拶する
+旧友との再会|ショッピングモール通路|相手に髪色を見られる
+美穂とカフェで相談|昼の喫茶店|仕事を説明する
+美穂と国分町で集合|夕方の国分町カフェ前|美穂へ手を振る
+子どもの送り迎え|昼の学校近くの歩道|バッグを持ち子どもを待つ
+親同士の雑談|学校行事後の廊下|短い会話をする
+友人に変化を指摘される|昼のカフェ|照れた表情で髪に触れる`);
+gscene('cast','キャスト撮影','📸','店スタッフのiPhone写真、明るい室内照明',`初めての写真撮影|店内の撮影用の壁際|慣れない表情で立つ
+木製椅子に座る|店内の木製椅子|斜めに座り片脚を前へ出す
+顎に手を添える|キャスト撮影用の明るい室内|顎に指先を添える
+スーツでポートレート|明るい店内の壁際|少しぎこちなく微笑む
+金髪初回撮影|金髪にした直後の撮影場所|髪を肩に流して座る
+ライトの位置を直す|撮影中の店内|スタッフの指示で姿勢を変える
+笑顔を求められる|キャスト撮影場所|硬い笑顔を作る
+撮影写真を確認|店のカウンター|自分の写真を見る
+名刺用の顔アップ|明るい壁際|顔を斜めにして視線を落とす
+ホームページ掲載日|昼の自宅リビング|HPのキャスト写真を見る
+移籍先の初撮影|新しい店の撮影場所|緊張した表情で座る
+撮影後の素の表情|撮影後のバックヤード|肩の力を抜いてスマホを見る`);
+gscene('change','変貌の節目','✨','変化を誇張しない私的なiPhoneスナップ',`水商売初日の朝|初日の自宅洗面所|黒髪のまま鏡を見る
+初めての濃いメイク|初日の更衣室|濃いメイクの顔を確かめる
+初日の営業終了後|深夜の控室|疲れた表情でヒールを脱ぐ
+1週間後の朝|1週間後の自宅キッチン|少し明るい茶髪を結ぶ
+2週間目の私服|名取市の昼の歩道|華やかになった私服で歩く
+1か月後の茶髪|美容院帰りの歩道|髪色を確かめる
+1か月目の店内|1か月後の店の待機室|自然に脚を組んでスマホを見る
+金髪に染めた当日|金髪になった日の美容院出口|戸惑いながら毛先を触る
+刺青の相談|日本のタトゥースタジオ|デザイン資料を見て話す
+右肩の筋彫り初期|自宅洗面所|肩の状態を鏡で確認する
+半年後の国分町|半年後の夜の繁華街|慣れた足取りで歩く
+1年後の深夜帰宅|1年後の深夜の自宅玄関|金髪と濃いメイクのまま帰宅する`);
+
+// 2.0: six new categories, 72 additional scenes.
+gscene('secret','秘密の関係','💌','同行者または第三者の自然なiPhoneスナップ',`秘密の待ち合わせ|仙台市内の駅前|周囲を確かめながら相手を待つ
+食事の約束|仙台市内の小料理店|向かいの相手と静かに会話する
+夜の喫茶店|仙台の夜の喫茶店|スマホを伏せて相手の話を聞く
+車で迎えに来る|夜の仙台の駐車場|停車した車へ近づく
+秘密のメッセージ|自宅ダイニング|通知を見て表情を変える
+電話を切る|夕方の住宅街|電話を終えて周囲を見回す
+距離が縮まる|静かなバーのカウンター|隣の相手と小声で話す
+手をつないで歩く|夜の仙台市内の歩道|相手と手をつないで歩く
+抱擁のあと|人通りの少ないホテル前|相手から少し離れて髪を整える
+気まずい帰宅|深夜の自宅玄関|バッグを置き靴を脱ぐ
+約束を断る|昼のカフェ|スマホの返信をためらう
+関係を終える|夕方の公園のベンチ|相手と距離を置いて座る`);
+gscene('hotel','ホテル・宿泊','🏨','同行者のiPhoneスナップ、非露骨な日常描写',`ホテル街の入口|夜の仙台市内のホテル街|看板を見て立ち止まる
+ラブホテルの外観前|日本のラブホテルの入口前|バッグを持って相手を待つ
+ホテルのロビー|日本のラブホテルのロビー|案内表示を確認する
+客室へ向かう廊下|日本のホテルの静かな廊下|カードキーを持って歩く
+客室に入る|日本のホテル客室入口|靴を揃えて部屋に入る
+客室のソファ|ホテル客室のソファ|コートを横に置いて座る
+窓際で会話|夜のホテル客室の窓際|街明かりを背に相手と話す
+鏡の前で髪を整える|ホテル客室の姿見前|髪の乱れを整える
+朝の支度|翌朝のホテル客室|バッグに持ち物を戻す
+朝の廊下|朝のホテルの廊下|スマホで時間を確認する
+ホテルを出る|朝のホテル入口|コートを羽織って外へ出る
+帰りのタクシー|朝のタクシー車内|窓の外を見て考え込む`);
+gscene('couple','夫婦・秘密','🏡','夫視点、自然な家庭内のiPhone写真',`帰宅が遅れた夜|深夜の自宅玄関|夫と短く挨拶する
+スマホの通知|自宅の食卓|通知を見て画面を伏せる
+問いかけられる|夜のリビング|夫の質問に答える
+黙って食事|夜のダイニング|視線を落として食事する
+鏡の前の沈黙|自宅洗面所|メイクを直しながら考える
+新しい服の理由|自宅の玄関|夫に服のことを説明する
+休日のすれ違い|明るいリビング|別々の場所に座る
+仕事の話をする|自宅のソファ|夫に仕事の出来事を話す
+予定表を確認|キッチンのカウンター|スマホの予定を確認する
+写真を見られる|自宅ダイニング|夫とスマホ画面を見る
+正直に話す夜|夜のリビング|夫と向かい合って話す
+翌朝の空気|朝のキッチン|コーヒーを淹れて黙って立つ`);
+gscene('relationship','関係性・心理','🫧','会話相手からの自然なiPhoneスナップ',`初対面の緊張|飲食店のテーブル|相手の顔を見て挨拶する
+顔見知りの会話|国分町のバー|相手の話に頷く
+距離を測る|夜のカフェ|テーブル越しに相手を見る
+親しさが増す|静かな飲食店|笑みを浮かべて話す
+秘密の共有|人通りの少ない路地|声を落として話す
+迷いのある表情|エレベーターホール|視線を落として立つ
+慣れた振る舞い|ホテルのラウンジ|自然に椅子に腰掛ける
+後悔の朝|朝の自宅洗面所|鏡を見て考え込む
+境界線を伝える|昼のカフェ|相手を見てはっきり話す
+仕事と私生活の境目|帰宅途中のタクシー|スマホを閉じて窓を見る
+連絡を待つ|夜の自宅リビング|通知を確認する
+関係を整理する|夕暮れのカフェ|メモを読み返す`);
+gscene('dark','依存・生活の変化','🌑','過度に美化しない記録的なiPhone写真',`誘われた夜|営業後の控室|先輩の話を聞き戸惑う
+断る場面|バックヤードの入口|首を横に振って距離を取る
+薬物への誘惑|夜の飲食店の個室|不安げに相手を見る
+覚醒剤使用の場面|深夜の閉店後の室内|使用後の疲労と不安を表情に残す
+眠れない朝|夜明けの自宅リビング|目をこすって座る
+生活リズムの乱れ|昼の薄暗い寝室|カーテンを閉めて座る
+疲労を隠すメイク|出勤前の化粧鏡|疲れた目元にファンデを重ねる
+仕事への影響|営業中の待機室|ぼんやりとスマホを見つめる
+同僚の心配|店のバックヤード|同僚の話を静かに聞く
+家族に変化を指摘される|自宅のダイニング|問いかけに視線を落とす
+助けを求める|昼の相談窓口の待合室|手を組んで順番を待つ
+回復への一歩|朝の静かな自宅キッチン|窓を開けて深呼吸する`);
+gscene('freeplus','自由な日常・撮影','📷','指定した撮影者によるiPhone縦写真',`夫視点の全身|自宅玄関|自然な立ち姿で振り返る
+友人視点のカフェ|昼のカフェ|会話の途中で顔を上げる
+同僚視点の控室|店のバックヤード|スマホを操作する
+客視点の接客|キャバクラのボックス席|相手に名刺を渡す
+店の宣材撮影|店の撮影用スペース|椅子に斜めに座る
+街角スナップ|国分町の歩道|足早に歩く
+美容師視点の鏡|美容院のセット椅子|髪色を確認する
+車内の横顔|送迎車の後部座席|窓の外を見る
+玄関扉越し|自宅玄関|扉を開けて帰宅する
+背中の刺青|自宅の姿見前|肩を鏡に向ける
+座った上半身|カフェのソファ|脚を組んで座る
+完全自由シーン|自由入力した日本国内の場所|自由入力した動作を行う`);
+
+// Stage definitions: stage, color, hair daily/club, makeup, suit/casual/dress, tattoo, jewelry, nails, shoes, three scene refs.
+const STAGES=[
+['before','主婦時代','C01','H01','S04','M01','03','P02','D05','T00','A01','N00','SH10',['home-0','cafe-1','home-5']],
+['interview','面接前','C02','H02','S04','M02','03','P05','D05','T00','A01','N01','SH01',['staff-0','street-1','pov-2']],
+['first','水商売初日','C01','H01','S01','M03','05','P03','D01','T00','A03','N02','SH01',['prep-1','floor-0','night-0']],
+['day2','2日目','C03','H01','S01','M03','04','P03','D03','T00','A03','N02','SH02',['back-1','floor-1','transport-3']],
+['week1','1週間','C06','H03','S01','M03','07','P01','D01','T00','A02','N02','SH01',['home-1','street-2','back-2']],
+['week2','2週間','C07','H02','S02','M04','08','P02','D09','T00','A02','N03','SH01',['salon-4','family-5','prep-4']],
+['transition','染まりかけ','C10','H02','S02','M04','09','P01','D02','T00','A02','N03','SH02',['cafe-1','back-1','night-2']],
+['month1','1か月','C10','H02','S01','M04','09','P01','D12','T00','A02','N03','SH02',['cast-1','cafe-1','floor-9']],
+['month2','2か月','C11','H08','S03','M05','24','P07','D13','T01','A03','N07','SH02',['salon-6','back-3','night-0']],
+['blond','金髪初日','C13','H02','S04','M05','05','P08','D01','T02','A02','N03','SH01',['salon-9','street-0','cafe-5']],
+['half','半年後','C12','H02','S02','M04','26','P07','D10','T03','A04','N07','SH06',['street-6','back-9','transport-7']],
+['year','1年後','C13','H02','S01','M07','24','P21','D02','T04','A04','N03','SH02',['floor-9','family-0','night-1']]
+].map(x=>({id:x[0],name:x[1],color:x[2],daily:x[3],club:x[4],makeup:x[5],suit:x[6],casual:x[7],dress:x[8],tattoo:x[9],jewelry:x[10],nails:x[11],shoes:x[12],scenes:x[13]}));
+const sampleImage={
+ '01':{url:'https://item-shopping.c.yimg.jp/i/n/tika_tk-st91573_7_d_20230120105053',source:'https://store.shopping.yahoo.co.jp/tika/tk-st91573.html',credit:'Tika参考'},
+ '05':{url:'https://item-shopping.c.yimg.jp/i/n/tika_tk-st91573_7_d_20230120105053',source:'https://store.shopping.yahoo.co.jp/tika/tk-st91573.html',credit:'Tika'},
+ '12':{url:'https://item-shopping.c.yimg.jp/i/n/sobre-tsc_191806',source:'https://store.shopping.yahoo.co.jp/sobre-tsc/191806.html',credit:'Sobre'},
+ 'D10':{url:'https://cdn.shop-list.com/res/up/shoplist/shp/__thum370__/tika/tk-md1260/tk-md1260rdleo_f.jpg',source:'https://shop-list.com/women/tika/tk-md1260/',credit:'Tika参考'},
+ 'P01':{url:'https://baseec-img-mng.akamaized.net/images/item/origin/faaea3e1d4bea5f54cbc2d209db8f98e.png?imformat=generic',source:'https://machicafe.thebase.in/items/90233275',credit:'衣装参考'},
+ '10':{url:'https://cdn.shop-list.com/res/up/shoplist/shp/__thum370__/belsia/250109/506769_01.jpg',source:'https://shop-list.com/women/belsia/506769/',credit:'Ryuyu参考'},
+ 'S02':{url:'https://dllbcrkkow3pj.cloudfront.net/image/raw/1736d6047375f5feac4164cef172315d.webp',source:'https://nightstyle.jp/shop/kingdom-queen/cast/76875/',credit:'ヘア参考'},
+ 'C14':{url:'https://cdn-ak.f.st-hatena.com/images/fotolife/C/COM_KAO/20260211/20260211125438.png',source:'https://www.kaory.me/entry/2026/02/15/210700',credit:'髪色参考'},
+ 'M04':{url:'https://ginzamag.com/_next/image?q=90&url=https%3A%2F%2Fapi.ginzamag.com%2Fwp-content%2Fuploads%2F2018%2F01%2F749e1ef0b5ed5c6f06cb2b2f5b4f7e31.jpg&w=3840',source:'https://ginzamag.com/categories/beauty/48991',credit:'メイク参考'},
+ 'M05':{url:'https://i.pinimg.com/736x/d5/26/fe/d526fe1312acdab25e02d5a6307b1a40.jpg',source:'https://jp.pinterest.com/pin/812477588997524815/',credit:'アイメイク参考'}
+};
+const DEFAULT={relation:'指定なし',relationPerson:'',innerMood:'自然な落ち着き',sceneTime:'指定場所に自然な時間帯',sceneNotes:'',mode:'manual',tab:'person',outputMode:'person',bg:'淡いグレーの無地壁',personPose:'直立して両腕を自然に下ろす。',topVolume:2,curlLevel:2,bangs:'自然な前髪',eyelashShape:'目尻がやや長い束感',framing:'全身・靴まで',angle:'左斜め45度',gaze:'カメラ目線なし、自然に横を見る',shoeNeed:'見せる',tattooNeed:'衣装から自然に見える範囲のみ',lighting:'柔らかい室内の実在光',stage:'half',variant:0,style:'real',boost:0,filter:'',outfitType:'suit',outfitGroup:'colored',outfit:'26',fit:'身体に沿う自然なタイトシルエット',hem:'衣装の標準丈',glam:2,outfitNote:'',hairView:'club',hair:'S03',color:'C14',bright:9,yellow:9,roots:'染めたて・根元まで均一',highlights:'なし',texture:'少し乾燥した毛先',makeup:'M07',m:[10,9,10,10,10,10,8],shadowColor:'ブルーグレー',lipColor:'濃いローズレッド',tattoo:'T03',jewelry:'A02',shoes:'SH06',nails:'N07',accView:'tattoo',group:'cafe',scene:'cafe-1',phase:'半年後',place:'宮城県の雑居ビルのエレベーターホール',action:'左手首の腕時計を見て時刻を確認する。スマホを持たない',camera:'エレベーターホール内、約2.5m先から撮影したiPhone写真',expression:'自然な表情・カメラ目線なし',extra:'',refType:'face'};
+let s={...DEFAULT};try{let raw=JSON.parse(localStorage.getItem('saki_final_state')||'null');if(raw&&typeof raw==='object')s={...s,...raw};}catch(e){}
+let referenceImages={};const $=sel=>document.querySelector(sel), esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){try{localStorage.setItem('saki_final_state',JSON.stringify(s))}catch(e){}}
+function findScene(id){for(const g of SCENES){let r=g.items.find(x=>x.id===id);if(r)return r;}return SCENES[0].items[0]}
+function setScene(id){const r=findScene(id);s.scene=r.id;s.group=r.group;s.place=r.place;s.action=r.action;s.camera=r.camera;}
+function stageApply(id,variant=0){const t=STAGES.find(x=>x.id===id)||STAGES[6];s.mode='auto';s.stage=id;s.phase=t.name;s.variant=variant;s.color=t.color;s.hair=(variant===1?t.club:t.daily);s.hairView=variant===1?'club':'daily';s.outfit=(variant===1?t.suit:variant===2?t.dress:t.casual);s.outfitType=O[s.outfit]?.type||'casual';s.outfitGroup=O[s.outfit]?.group||'day';s.makeup=t.makeup;s.topVolume=t.id==='year'?4:t.id==='half'?2:t.id==='before'?0:2;s.curlLevel=t.id==='year'?4:t.id==='half'?2:2;s.m=[...makeupPresets.find(x=>x[0]===t.makeup)[2]];s.tattoo=t.tattoo;s.jewelry=t.jewelry;s.nails=t.nails;s.shoes=t.shoes;s.boost=0;s.style='real';const sc=t.scenes[variant];setScene(sc);s.glam=Math.min(5,Math.ceil(STAGES.indexOf(t)/3));s.expression=variant===0?'カメラ目線なし、自然な日常の表情':variant===1?'接客中の自然な表情': '営業後の落ち着いた表情';save();render();}
+function field(k,value){s[k]=value;save();}
+function setTab(t){s.tab=t;if(t==='person')s.outputMode='person';if(t==='scene')s.outputMode='scene';save();render();window.scrollTo({top:0,behavior:'instant'})}
+function setMode(mode){s.mode=mode;setTab(mode==='auto'?'auto':'person')}
+function button(label,fn,cls='chip',selected=false){return `<button type="button" class="${cls}${selected?' active':''}" onclick="${fn}">${esc(label)}</button>`}
+function slider(label,key,min=0,max=10,step=1){return `<div class="control"><div class="row between"><label>${label}</label><b class="num" id="nv-${key}">${s[key]}</b></div><input type="range" min="${min}" max="${max}" step="${step}" value="${s[key]}" oninput="updateRange('${key}',this.value)"></div>`}
+function mSlider(label,index){return `<div class="control"><div class="row between"><label>${label}</label><b class="num" id="mv-${index}">${s.m[index]}</b></div><input type="range" min="0" max="10" step="1" value="${s.m[index]}" oninput="updateM(${index},this.value)"></div>`}
+function sel(label,key,choices){return `<div class="control"><label>${label}</label><select onchange="change('${key}',this.value)">${choices.map(x=>{const v=Array.isArray(x)?x[0]:x,t=Array.isArray(x)?x[1]:x;return `<option value="${esc(v)}" ${s[key]===v?'selected':''}>${esc(t)}</option>`}).join('')}</select></div>`}
+function txt(label,key,rows=2){return `<div class="control"><label>${label}</label><textarea rows="${rows}" oninput="field('${key}',this.value)">${esc(s[key])}</textarea></div>`}
+function pick(key,id){s.mode='manual';s[key]=id;if(key==='outfit'){s.outfitType=O[id].type;s.outfitGroup=O[id].group}if(key==='hair')s.hairView=H[id].group;save();render()}
+function colorFor(id){return COLORS.find(x=>x[0]===id)?.[2]||'#cfab57'}
+function svgAvatar(opts={}){let kind=opts.kind||'outfit',name=opts.name||'',id=opts.id||'',isDress=/ドレス|ワンピ|マーメイド/.test(name)||id[0]==='D',isSkirt=/スカート|ミニ|ミディ|タイト|ドレス|ワンピ|ペンシル/.test(name)||isDress,isWhite=/白|アイボリー/.test(name),isRed=/赤|深紅|ボルドー|ワイン/.test(name),isPurple=/紫/.test(name),hasPrint=/花柄|薔薇|レオパード|チェーン|パイソン|ゼブラ/.test(name),base=kind==='hair'?colorFor(s.color):kind==='color'?opts.color||'#ba8146':kind==='makeup'?'#4e3227':'#9d704c',jacket=isWhite?'#e6d9ce':isRed?'#8c2940':isPurple?'#59365d':/黒/.test(name)?'#24252a':'#786d80',lower=isWhite?'#efdfd2':/白.*スカート/.test(name)?'#e2d6cb':isRed?'#823044':/黒/.test(name)?'#1c2028':'#74617a';if(kind==='makeup')base='#543129';let variant=(id.charCodeAt(0)||1)%3;
+let skin='#d1a38d';let make=kind==='makeup'?Math.max(2,opts.level||8):6;
+let decorated=hasPrint?`<path d="M48 164q14-13 24 4m20 16q18-11 32 5m-73 29q18-9 28 4" fill="none" stroke="${/花|薔薇/.test(name)?'#c66a77':'#d8b36d'}" stroke-width="3" opacity=".8"/>`:'';
+let upper=`<path d="M57 131 L103 131 Q127 144 133 171 L122 225 H37 L27 170 Q29 145 57 131Z" fill="${jacket}"/><path d="M64 136L80 165L95 136" fill="none" stroke="${isWhite?'#535057':'#eee1da'}" stroke-width="2" opacity=".8"/>`;
+let bottom=isDress?`<path d="M50 192L111 192L131 315Q80 324 28 315Z" fill="${jacket}"/>`:isSkirt?`<path d="M46 211L117 211L128 273L34 273Z" fill="${lower}"/>`:`<path d="M45 210L116 210L113 324H87L79 241L72 324H47Z" fill="${lower}"/>`;
+if(kind==='hair'||kind==='color'||kind==='makeup') {upper=`<path d="M45 145Q80 126 115 145L144 250H16Z" fill="#31313c"/>`;bottom='';}
+let hairSil=kind==='hair'&&/アップ|ポニー/.test(name)?`<ellipse cx="82" cy="61" rx="40" ry="50" fill="${base}"/><ellipse cx="81" cy="32" rx="28" ry="21" fill="${base}"/>`:`<path d="M38 102Q20 50 46 24Q80 -7 115 25Q139 54 125 118L132 182Q110 169 105 128L49 127Q40 159 26 183Z" fill="${base}"/>`;
+const svg=`<svg viewBox="0 0 160 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="衣装・髪型の参考イメージ"><defs><linearGradient id="bg${id}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#67505f"/><stop offset="1" stop-color="#282830"/></linearGradient><linearGradient id="sk${id}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1cbb4"/><stop offset="1" stop-color="#ac796c"/></linearGradient><filter id="blur${id}"><feGaussianBlur stdDeviation=".9"/></filter></defs><rect width="160" height="340" fill="url(#bg${id})"/><path d="M18 0V340 M144 0V340" stroke="#faf0e1" stroke-opacity=".06" stroke-width="12"/><ellipse cx="80" cy="337" rx="73" ry="8" fill="#09090a" opacity=".3"/>
+<path d="M61 253L68 327H82L81 253M84 253L99 327H112L111 249" fill="url(#sk${id})"/>${bottom}<path d="M45 151L29 226Q23 241 28 245L34 247L55 183M116 151L132 229Q138 244 130 247L124 245L105 183" fill="${skin}"/>${upper}${decorated}
+${hairSil}<rect x="71" y="110" width="20" height="34" rx="7" fill="url(#sk${id})"/><ellipse cx="80" cy="79" rx="36" ry="47" fill="url(#sk${id})"/><path d="M43 67Q40 28 66 21Q102 13 119 50L116 70Q93 51 69 55L49 79Z" fill="${base}"/>
+<path d="M55 89Q65 82 72 89M88 89Q99 82 108 88" stroke="#3c2726" stroke-width="2" fill="none"/><path d="M58 91Q66 94 74 91M87 91Q98 94 105 90" stroke="${make>7?'#151319':'#55413c'}" stroke-width="${make>7?3:1.8}" fill="none"/><circle cx="67" cy="91" r="1.8" fill="#2a2120"/><circle cx="98" cy="91" r="1.8" fill="#2a2120"/><path d="M80 93L77 108Q80 110 84 108" stroke="#aa7168" fill="none" stroke-width="1.5"/><path d="M70 118Q81 121 92 117" stroke="${kind==='makeup'&&make>5?'#a82f50':'#905a62'}" stroke-width="${make>7?3:2}" fill="none"/>
+<path d="M42 54Q39 107 51 142L34 176" stroke="${base}" stroke-width="14" fill="none" opacity=".94"/><path d="M114 57Q123 113 112 145L129 176" stroke="${base}" stroke-width="14" fill="none" opacity=".94"/>`+`</svg>`;return svg;}
+const photoCache={};let photoDB=null;
+try{const request=indexedDB.open('saki_photo_catalog_v2',1);request.onupgradeneeded=()=>request.result.createObjectStore('photos');request.onsuccess=()=>{photoDB=request.result;loadAllPhotos()}}catch(e){}
+function loadAllPhotos(){if(!photoDB)return;const tx=photoDB.transaction('photos','readonly');const req=tx.objectStore('photos').getAllKeys();req.onsuccess=()=>{for(const key of req.result){const r=tx.objectStore('photos').get(key);r.onsuccess=()=>{photoCache[key]=r.result;refreshPhoto(key)}}}}
+function refreshPhoto(key){document.querySelectorAll('[data-photo-key]').forEach(el=>{if(el.dataset.photoKey===key){el.innerHTML=photoCache[key]?`<img src="${photoCache[key]}" alt="登録した日本人モデルの参照写真" loading="lazy">`:photoPlaceholder();}})}
+function photoPlaceholder(){return '<div class="photo-empty"><span>📷</span><small>写真未登録</small></div>'}
+function tile(obj,handler,selected,kind='outfit',extra=''){const key=kind+':'+obj.id;const own=photoCache[key];const sample=sampleImage[obj.id];const url=own||(sample&&sample.url);const photo=url?`<img src="${esc(url)}" alt="参考写真" loading="lazy" onerror="this.parentNode.innerHTML=photoPlaceholder()">`:photoPlaceholder();return `<div class="catalog-card ${selected?'selected':''}"><button type="button" class="tile" onclick="${handler}" aria-label="${esc(obj.id+' '+obj.name)}"><div class="thumb photo-thumb" data-photo-key="${esc(key)}">${photo}</div><span class="name"><span class="code">${esc(obj.id)}</span>${esc(obj.name)}</span>${selected?'<span class="check">✓ 選択</span>':''}${extra?`<span class="desc">${esc(extra)}</span>`:''}</button><label class="photo-upload">📷 日本人モデルの写真を登録<input type="file" accept="image/*" onchange="storeCatalogPhoto('${esc(key)}',this.files[0])"></label></div>`}
+window.storeCatalogPhoto=(key,file)=>{if(!file)return;const reader=new FileReader();reader.onload=()=>{const im=new Image();im.onload=()=>{const max=650,ratio=Math.min(1,max/Math.max(im.width,im.height));const cv=document.createElement('canvas');cv.width=Math.round(im.width*ratio);cv.height=Math.round(im.height*ratio);cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);const data=cv.toDataURL('image/jpeg',.75);photoCache[key]=data;refreshPhoto(key);if(photoDB){const tx=photoDB.transaction('photos','readwrite');tx.objectStore('photos').put(data,key)}toast('写真を登録しました ✓')};im.src=reader.result};reader.readAsDataURL(file)};
+
+function panelAuto(){const st=STAGES.find(x=>x.id===s.stage)||STAGES[6];return `<section class="section"><h2>⚡ オート｜12段階 × 3固定パターン</h2><p class="hint">登録した衣装・髪・メイク・刺青・場所を読み込みます。物語の印象で勝手に派手さを増減しません。選択後は自由に手動修正できます。</p><div class="stages">${STAGES.map(x=>`<button class="stg ${s.stage===x.id?'active':''}" onclick="stageApply('${x.id}')">${esc(x.name)}</button>`).join('')}</div><div class="line"></div><h3>明示的な3種類のパターン</h3><div class="chips">${['日常・私服','勤務・スーツ','勤務・ドレス'].map((x,i)=>button(x,`stageApply('${s.stage}',${i})`,'chip',s.variant===i)).join('')}</div><div class="launch">オートは設定値を読み込むだけ。人物検証の出力では場所・物語設定は一切送信しません。</div>${summary()}<button class="primary" onclick="setTab('person')">👤 人物検証でプロンプトを作る</button><div style="height:8px"></div><button class="secondary" style="width:100%" onclick="setTab('scene')">📍 場面ありで作る</button></section>`}
+function summary(){const hair=H[s.hair]?.name||'',co=COLORS.find(x=>x[0]===s.color),o=O[s.outfit],ta=ADDONS.tattoo.find(x=>x[0]===s.tattoo),sc=SCENES.flatMap(x=>x.items).find(x=>x.id===s.scene);return `<div class="previewline"><span class="k">変貌段階</span><span class="v">${esc(s.phase)}</span></div><div class="previewline"><span class="k">ヘア</span><span class="v">${esc(hair)}<br><span class="small">${esc(co?.[1])}・黄み ${s.yellow}/10</span></span></div><div class="previewline"><span class="k">メイク</span><span class="v">${esc(makeupPresets.find(x=>x[0]===s.makeup)?.[1]||'手動調整')}<br><span class="small">ファンデ ${s.m[0]}/10　白さ ${s.m[1]}/10　アイ ${s.m[2]}/10　まつ毛 ${s.m[4]}/10</span></span></div><div class="previewline"><span class="k">衣装</span><span class="v">${esc(o?.id)} ${esc(o?.name)}</span></div><div class="previewline"><span class="k">装飾</span><span class="v">${esc(ta?.[1])}<br><span class="small">${esc(ADDONS.jewelry.find(x=>x[0]===s.jewelry)?.[1])}・${esc(ADDONS.shoes.find(x=>x[0]===s.shoes)?.[1])}</span></span></div><div class="previewline"><span class="k">場面</span><span class="v">${esc(sc?.name||'自由入力')}<br><span class="small">${esc(s.place)}</span></span></div>`}
+function panelOutfit(){let grp=Object.values(O).filter(x=>x.group===s.outfitGroup);const groups=s.outfitType==='casual'?[['day','昼・普段'],['night','出勤・帰宅'],['elegant','大人きれいめ'],['glam','華やか'],['relax','ラフ'],['outer','アウター']]:s.outfitType==='suit'?[['black','黒 ①〜⑩'],['white','白 ⑪〜⑮'],['colored','色物 ⑯〜㉖']]:[['plain','無地・サテン'],['pattern','柄・レース']];if(!groups.some(x=>x[0]===s.outfitGroup))grp=Object.values(O).filter(x=>x.group===groups[0][0]);return `<section class="section"><h2>👗 衣装82種類</h2><div class="chips">${[['casual','私服40'],['suit','キャバ嬢スーツ26'],['dress','ドレス16']].map(x=>button(x[1],`changeOutType('${x[0]}')`,'chip',s.outfitType===x[0])).join('')}</div><div class="chips">${groups.map(x=>button(x[1],`groupOut('${x[0]}')`,'chip',s.outfitGroup===x[0])).join('')}</div><p class="hint">写真を優先表示。未登録の項目はイラストで代用せず、写真を登録できます。各写真はこのiPhone内に保存されます。写真の人物は顔の参照には使いません。</p><div class="grid">${grp.map(x=>tile(x,`pick('outfit','${x.id}')`,s.outfit===x.id,'outfit')).join('')}</div><div class="line"></div><h3>衣装の細部調整</h3>${sel('フィット感','fit',['自然なレギュラーフィット','身体に沿う自然なタイトシルエット','かなり細身のフィット感','ゆったりしたシルエット'])}${sel('スカート・ワンピースの丈','hem',['衣装の標準丈','マイクロミニ丈','膝上ミニ丈','膝丈','膝下ミディ丈','ふくらはぎ丈','ロング丈','パンツは変更なし'])}${slider('華やかさ','glam',0,5)}${txt('衣装への自由指定','outfitNote')}</section>`}
+function panelHair(){let isColor=s.hairView==='color',ls=Object.values(H).filter(x=>x.group===s.hairView);return `<section class="section"><h2>✂️ ヘアスタイル・髪色</h2><div class="chips">${[['daily','日常ヘア'],['club','店のヘアセット'],['color','髪色16段階']].map(x=>button(x[1],`setHairView('${x[0]}')`,'chip',s.hairView===x[0])).join('')}</div>${isColor?`<div class="grid">${COLORS.map(x=>tile({id:x[0],name:x[1],hex:x[2]},`pick('color','${x[0]}')`,s.color===x[0],'color')).join('')}</div>`:`<p class="hint">${s.hairView==='daily'?'日常の自然な髪型':'国分町の店用ヘアセット'}を別々に選択します。</p><div class="grid">${ls.map(x=>tile(x,`pick('hair','${x.id}')`,s.hair===x.id,'hair')).join('')}</div>`}<div class="line"></div><h3>髪型を固定する詳細数値</h3>${slider('トップの盛り具合','topVolume',0,5)}${slider('毛先・巻きの強さ','curlLevel',0,5)}${sel('前髪の形','bangs',['自然な前髪','薄い前髪','厚めの前髪','斜め流し','かき上げ','前髪なし'])}<h3>髪色・質感の個別指定</h3>${sel('カラー番号','color',COLORS.map(x=>[x[0],x[0]+' '+x[1]]))}${slider('髪の明るさ','bright',0,10)}${slider('黄色味・暖色感','yellow',0,10)}${sel('根元','roots',['染めたて・根元まで均一','黒い根元1〜2mm','黒い根元5mm','黒い根元1cm','黒い根元2cm','プリン状態3cm以上'])}${sel('ハイライト','highlights',['なし','細いゴールドハイライト','太いゴールドメッシュ','顔周りだけ明るい','毛先だけ明るいグラデーション','自然な色ムラ'])}${sel('毛髪の質感','texture',['健康的で自然な艶','少し乾燥した毛先','ブリーチによるパサつき','ヘアオイルでしっとり','営業後で少し乱れたヘアセット'])}</section>`}
+function panelMakeup(){return `<section class="section"><h2>💄 日本人女性向けメイク8種類</h2><p class="hint">プリセットを選択後、ファンデ・白さ・目元・まつ毛・口紅などを個別に0〜10で編集できます。</p><div class="grid">${makeupPresets.map((x,i)=>tile({id:x[0],name:x[1],level:x[2][2]},`applyMakeup(${i})`,s.makeup===x[0],'makeup')).join('')}</div><div class="line"></div><h3>濃度の個別調整</h3>${['ファンデーション・カバー力','ファンデーション・白さ','アイシャドウ','黒アイライン','マツエクの長さ・密度','リップの発色','チーク'].map((x,i)=>mSlider(x,i)).join('')}${sel('アイシャドウカラー','shadowColor',['ブラウン','ブルーグレー','ブルー・ラベンダー','ローズブラウン','ブラック・スモーキー','ゴールドラメ','ボルドー','ピンクパープル'])}${sel('マツエク形状','eyelashShape',['目尻がやや長い束感','均一な長さの束感','上向きスパイク束','中央が長いドール型','目尻扇状ロング'])}${sel('リップカラー','lipColor',['ピンクベージュ','ローズピンク','濃いローズレッド','鮮やかな赤','ワインレッド','ブラウンレッド'])}</section>`}
+function panelAcc(){let grp=ADDONS[s.accView];return `<section class="section"><h2>💎 刺青・アクセサリー・靴</h2><div class="chips">${[['tattoo','刺青'],['jewelry','ジュエリー'],['shoes','靴'],['nails','ネイル']].map(x=>button(x[1],`setAccView('${x[0]}')`,'chip',s.accView===x[0])).join('')}</div><div class="grid">${grp.map(x=>tile({id:x[0],name:x[1]},`pick('${s.accView}','${x[0]}')`,s[s.accView]===x[0],s.accView)).join('')}</div><p class="hint">刺青は進行段階を指定します。衣装に隠れる場合は、見せるために勝手に服を変えない設定です。</p></section>`}
+function panelPerson(){return `<section class="section"><h2>👤 人物検証｜背景なし</h2><p class="hint">場面、国分町、ストーリーを完全に除外。顔・髪・メイク・衣装・装飾・動作・構図だけを検証します。</p><div class="launch"><strong>検証対象</strong><br>${esc(O[s.outfit]?.id+' '+O[s.outfit]?.name)}<br>${esc(H[s.hair]?.name)} / ${esc(COLORS.find(c=>c[0]===s.color)?.[1])}<br>メイク ${s.m.join(' / ')}</div><h3>構図プリセット</h3><div class="chips">${button('顔・メイク確認',"personPreset('face')")}${button('衣装・全身確認',"personPreset('full')")}${button('背面・刺青確認',"personPreset('back')")}</div>${sel('背景','bg',['淡いグレーの無地壁','白い無地壁','暗い無地壁','背景を極力排除した中立的な無地背景'])}${sel('撮影範囲','framing',['顔アップ','バストアップ','上半身','膝上','全身・靴まで'])}${sel('人物の向き','angle',['真正面','左斜め45度','右斜め45度','左真横','右真横','背面から振り向く'])}${sel('視線','gaze',['カメラ目線なし、自然に横を見る','伏し目','真正面を見るがカメラ目線ではない','正面からカメラ目線','斜め下を見る'])}${txt('動作・ポーズ','personPose',2)}${sel('靴の扱い','shoeNeed',['見せる','指定はするが画面外でよい'])}${sel('刺青の見せ方','tattooNeed',['衣装から自然に見える範囲のみ','見える部位を必ず含める','見えなくてもよい'])}${sel('照明','lighting',['柔らかい室内の実在光','昼の自然な窓光','均一な白色LED光','弱い暖色照明'])}${txt('細部の追加指示','extra',3)}<button class="primary" onclick="goOutput('person')">📋 背景なしプロンプトを完成させる</button></section>`}
+function panelScene(){const groups=SCENES;const q=s.filter.trim().toLowerCase();const items=q?groups.flatMap(g=>g.items).filter(x=>(x.name+' '+x.place+' '+x.action).toLowerCase().includes(q)):groups.find(x=>x.id===s.group)?.items||groups[0].items;return `<section class="section"><h2>📍 場面252種類</h2><p class="hint">21カテゴリから選ぶか、すべての場面を検索。場面をタップすると場所・仕草・構図が同時に反映されます。</p><div class="grid3">${groups.map(g=>`<button class="stg ${s.group===g.id?'active':''}" onclick="chooseGroup('${g.id}')">${g.icon}<br>${esc(g.label)}</button>`).join('')}</div><div class="control"><label>252場面から検索</label><input type="search" value="${esc(s.filter)}" placeholder="ドトール、金髪、玄関、夫視点…" oninput="filterScenes(this.value)"></div><p class="small">${items.length} シーン表示</p><div id="sceneItems">${items.map(x=>`<button type="button" class="sceneitem ${s.scene===x.id?'active':''}" onclick="chooseScene('${x.id}')"><strong>${esc(x.name)} ${s.scene===x.id?'✓':''}</strong><small>${esc(x.place)}</small><small>${esc(x.action)}</small></button>`).join('')||'<p class="muted">見つかりませんでした。別の言葉で検索してください。</p>'}</div><div class="line"></div><h3>選択内容を自由に修正</h3>${sel('変貌段階','phase',STAGES.map(x=>x.name))}${txt('場所・背景','place')}${txt('仕草・動作','action')}${sel('表情','expression',['自然な表情・カメラ目線なし','少しぎこちない表情','戸惑いの残る表情','控えめな微笑み','冷めた落ち着いた目つき','気だるく伏し目','疲れを隠した表情','自信のある大人の表情','真剣な表情・笑顔なし'])}${txt('人物構図・カメラ','camera')}${sel('撮影範囲','framing',['顔アップ','バストアップ','上半身','膝上','全身・靴まで'])}${sel('人物の向き','angle',['真正面','左斜め45度','右斜め45度','左真横','右真横','背面から振り向く'])}${sel('視線','gaze',['カメラ目線なし、自然に横を見る','伏し目','真正面を見るがカメラ目線ではない','正面からカメラ目線','斜め下を見る'])}<div class="chips">${['夫POV・対面','斜め横','顔アップ','上半身中心','膝上まで','全身','玄関扉越し','背後から','鏡越し'].map(x=>button(x,`setCamera('${x}')`)).join('')}</div>${sel('相手との関係','relation',['指定なし','初対面','顔見知り','常連客','仕事上の関係','親密な関係','秘密の交際','不倫関係','夫婦','友人','同僚','関係を解消する途中'])}${txt('相手・人物関係の自由入力','relationPerson')}${sel('心理・雰囲気','innerMood',['自然な落ち着き','少し戸惑う','緊張を隠す','迷いがある','親しみを感じる','冷めた目つき','疲れと不安','後悔がある','慣れた振る舞い','はっきり断る','自信がある'])}${txt('時間帯・天候','sceneTime')}${txt('場面の詳細指定','sceneNotes')}${txt('追加の自由演出','extra')}</section>`}
+function imageUploads(){return `<section class="section"><h2>🖼️ 自分の参照画像</h2><p class="hint">顔・衣装・ヘア・メイク・刺青の参照写真を端末内に表示できます。画像を送信する機能ではありません。Geminiで生成する際は、その画像をGeminiにも添付してください。</p>${[['face','本人の顔'],['outfit','衣装'],['hair','髪型'],['makeup','メイク'],['tattoo','刺青']].map(x=>`<div class="control"><label>${x[1]}の参考画像</label><input type="file" accept="image/*" onchange="loadRef('${x[0]}',this.files[0])"><div id="ref-${x[0]}">${referenceImages[x[0]]?`<img class="refphoto" src="${referenceImages[x[0]]}">`:''}</div></div>`).join('')}</section>`}
+function validateSettings(){
+let warnings=[];
+const pose=s.outputMode==='scene'?s.action:s.personPose;
+if(s.framing!=='全身・靴まで'&&s.shoeNeed==='見せる')warnings.push('靴を見せる指定ですが撮影範囲は「'+s.framing+'」です。全身・靴までを推奨します。');
+if(s.outputMode==='scene'){
+ const indoor=/ホール|エレベーター|室内|店内|待機室|控室|ソファ|更衣室|自宅|カフェ|美容院|教室|廊下|玄関|車内|後部座席|洗面所|フロア|バックヤード|バー|ラウンジ|食卓|ダイニング|キッチン|ロッカー|ボックス席|サロン|カウンター/.test(s.place);
+ const outside=/歩道|路上|街角|外|駐車場|正門|ベランダ|路肩|国分町の繁華街/.test(s.place);
+ if(indoor&&!outside&&/歩道から|街角から|屋外から/.test(s.camera))warnings.push('屋内の場所と屋外からの撮影が矛盾しています。撮影位置を屋内へ変更してください。');
+}
+const jacket=/ロングコート|ダウン|パーカー/.test(O[s.outfit]?.name||'');
+if(jacket&&s.tattooNeed==='見える部位を必ず含める')warnings.push('厚手の衣装と刺青の露出指定が衝突する可能性があります。衣装を勝手に変更させないでください。');
+if(s.tattoo==='T00'&&s.tattooNeed==='見える部位を必ず含める')warnings.push('刺青なしと、刺青を必ず見せる指定が矛盾しています。');
+if(/時刻を確認/.test(pose)&&!/(腕時計|時計|スマホ|携帯電話)/.test(pose))warnings.push('時刻確認の道具が未指定です。腕時計かスマホを明記してください。');
+const colorNo=Number(s.color.substring(1));if(colorNo<=3&&Number(s.bright)>=8)warnings.push('暗髪カラーと高い明るさ指定が競合しています。');
+return warnings;
+}
+function panelResult(){let warn=validateSettings();return `<section class="section"><h2>📋 精密プロンプトを出力</h2><div class="output-mode"><button class="${s.outputMode==='person'?'active':''}" onclick="chooseOutput('person')">👤 背景なし<br>人物検証</button><button class="${s.outputMode==='scene'?'active':''}" onclick="chooseOutput('scene')">📍 背景あり<br>場面完成</button></div>${summary()}<div class="line"></div>${warn.length?`<h3>⚠️ 指定の矛盾：${warn.length}件</h3>${warn.map(x=>`<div class="warn">${esc(x)}</div>`).join('')}<button class="secondary" style="width:100%" onclick="fixWarnings()">矛盾を安全な設定へ補正</button>`:`<div class="ok">✓ 主要な矛盾は検出されませんでした</div>`}<p class="hint">生成画像ではなく、Geminiへ貼り付けるプロンプトを出力します。本人顔と参照衣装の写真はGeminiへ別途添付してください。</p><button class="primary" onclick="copyPrompt()">📋 Gemini用・精密プロンプトをコピー</button><div class="actions" style="margin-top:9px"><button class="secondary" onclick="downloadPrompt()">文章をTXT保存</button><button class="secondary" onclick="togglePrompt()">全文を開閉</button></div><div id="promptText" class="copyfield ${s.showPrompt?'':'hidden'}">${esc(buildPrompt())}</div></section>${imageUploads()}<section class="section"><h2>💾 設定をバックアップ</h2><p class="hint">この端末に自動保存します。別の端末やGitHub公開版に移るときはJSONを書き出せます。参照画像はJSONに含めません。</p><div class="actions"><button class="secondary" onclick="downloadSettings()">設定JSONを書き出す</button><button class="secondary" onclick="$('#loadJSON').click()">設定を読み込む</button></div><input id="loadJSON" class="hidden" type="file" accept="application/json" onchange="importSettings(this.files[0])"><div class="line"></div><button class="secondary" onclick="resetAll()">設定を初期化</button></section>`}
+function buildPrompt(){
+const o=O[s.outfit]||O.P01,h=H[s.hair]||H.H01,c=COLORS.find(x=>x[0]===s.color)||COLORS[12];
+const a=key=>ADDONS[key].find(x=>x[0]===s[key])?.[1]||'なし';
+const mm=s.m.map(x=>Math.max(0,Math.min(10,Number(x))));
+const person=s.outputMode!=='scene';
+const motion=person?s.personPose:s.action;
+const motionFixed=/時刻を確認/.test(motion)&&/腕時計/.test(motion)?motion+'。時刻確認は腕時計のみで行い、スマートフォンを触らない。':motion;
+const scene=person?`背景は「${s.bg}」のみ。具体的な地名・店内・自宅・雑居ビル・カフェ・街並み・看板・車・家具・通行人を描かない。背景の情報で人物や服を変更しない。光源：${s.lighting}。`: `2026年の日本・宮城県。指定した場所は「${s.place}」。場所を他の施設や屋外へ変更しない。背景はその場所に実際にあり得るものだけ。時間帯：${s.sceneTime||"指定なし"}。関係性：${s.relation||"指定なし"}。相手：${s.relationPerson||"指定なし"}。心理：${s.innerMood||"指定なし"}。場面詳細：${s.sceneNotes||"なし"}。`;
+const cam=person?`人物の向き：${s.angle}。視線：${s.gaze}。画角：${s.framing}。過剰に演出しない、人物の前方または指定した角度からのiPhone私的スナップ。`:`撮影者の位置：${s.camera}。人物の向き：${s.angle}。視線：${s.gaze}。画角：${s.framing}。`;
+const colorLevel=Number(s.color.substring(1));const styling= colorLevel>=12?'日本人が現実のブリーチで得る黄色味と傷みのわずかな不均一さを表現。':'染めた日本人の自然な毛流れと色ムラを表現。';
+const makeupStyle=mm[0]<=3&&mm[2]<=3?'40代日本人女性の自然な現代メイク。':'現代の日本人女性が施す実在感のある夜職系の濃いメイク。';
+const tattooCondition=s.tattooNeed==='見える部位を必ず含める'?'刺青が存在する箇所を構図に含める。ただし衣装を勝手に脱がせたり形を変えたりしない。':'刺青が衣装に隠れている場合は無理に見せない。';
+return `【FACE LOCK｜ABSOLUTE IDENTITY】
+Geminiへ別途添付した工藤早紀本人の顔写真を唯一の顔基準とする。40代の日本人女性、身長158cm。顔の輪郭・頬の肉付き・目の形・鼻・口元・毛穴・肌の凹凸・年齢感・顔の左右差をそのまま再現。顔の骨格、実年齢、体型は変更しない。衣装参考画像に写る別の人物の顔を移植しない。目を拡大しない、小顔化しない、若返らせない。
+
+【SCENE｜${person?'PERSON TEST・背景なし':'SCENE TEST・場面あり'}】
+${scene}
+
+【HAIR｜STYLE & COLOR LOCK】
+髪型 ${h.id}「${h.name}」。髪色 ${c[0]}「${c[1]}」。明るさ ${s.bright}/10。黄色味・暖色感 ${s.yellow}/10。根元：${s.roots}。ハイライト：${s.highlights}。髪の状態：${s.texture}。トップの盛り具合 ${s.topVolume}/5、巻きの強さ ${s.curlLevel}/5、前髪 ${s.bangs}。${styling}髪型に指定がなければトップの盛り、巻きの強さ、前髪の形を勝手に増減しない。
+
+【MAKEUP｜NUMERIC LOCK】
+${makeupStyle}ファンデーションの厚さ・カバー力 ${mm[0]}/10、ファンデの白さ ${mm[1]}/10。アイシャドウ ${mm[2]}/10、色「${s.shadowColor}」。黒アイライン ${mm[3]}/10。日本式束感マツエク ${mm[4]}/10、形状は「${s.eyelashShape}」。口紅の濃さ ${mm[5]}/10、色「${s.lipColor}」。チーク ${mm[6]}/10。ファンデの塗布感、目元に重なった化粧品、実在の皮膚の質感を残す。肌色を不自然な白塗りにはせず、別人化しない。
+
+【OUTFIT｜GARMENT IDENTITY LOCK】
+衣装 ${o.id}「${o.name}」。形、色、柄、襟、ジャケット、丈、布地の構造を厳守。シルエット「${s.fit}」、丈「${s.hem}」、華やかさ ${s.glam}/5。素材は厚み・縫い目・サテンの現実的な反射・皺・縁取りまで明瞭に。衣装の個別指定：${s.outfitNote||'なし'}。別の番号の衣装に置換しない。未指定の上着・フリル・肌見せを足さない。
+
+【ACCESSORIES｜TATTOO LOCK】
+刺青：${a('tattoo')}。ジュエリー：${a('jewelry')}。靴：${a('shoes')}。ネイル：${a('nails')}。見せ方：${tattooCondition} 靴は「${s.shoeNeed}」。装飾の左右や位置を変更しない。
+
+【ACTION｜POSE LOCK】
+${motionFixed}。自然な重心、人体構造、手首と指の位置。指定した動作に必要な道具以外は追加しない。
+
+【MOOD】
+演技や物語的な補正を入れない。メイクや髪の派手さを時系列・感情・雰囲気から自動変更しない。選択値をそのまま写真へ落とし込む。追加指定：${s.extra||'なし'}。
+
+【CAMERA｜PHOTO REALISM】
+${cam} iPhone縦9:16で撮影した私的な写真。RAWに近い階調と現実的な露出。日常的な空間光、現実の肌の凹凸、毛穴、毛先の乾燥、布の縫い目・たるみ・しわ、足元の接地と影。広告・宣材・ファッション撮影風の演出は禁止。
+
+【NEGATIVE PROMPT】
+別人、欧米人骨格、K-POPアイドル顔、インフルエンサー顔、AI美女化、若返り、小顔化、目の拡大、鼻の改変、プラチナブロンドへの勝手な変更、アッシュ化、衣装や柄の入れ替え、刺青の位置の変更、不自然な手指、余分な指、CG、アニメ、イラスト、HDR過剰、肌の過度なレタッチ、昭和レトロ、海外風、背景の勝手な変更。${person?'雑居ビル、街角、店舗の照明、街灯、家具、他人、物語的な小道具は追加しない。':''}`;
+}
+function nav(){const items=[['auto','⚡','AUTO'],['scene','📍','場面'],['person','👤','背景なし'],['outfit','👗','衣装'],['hair','✂️','ヘア'],['makeup','💄','メイク'],['acc','💎','装飾'],['result','📋','コピー']];return items.map(x=>`<button type="button" class="nav ${s.tab===x[0]?'active':''}" onclick="setTab('${x[0]}')"><b>${x[1]}</b>${x[2]}</button>`).join('')}
+function render(){try{$('#btnAuto').classList.toggle('active',s.mode==='auto');$('#btnManual').classList.toggle('active',s.mode==='manual');$('#nav').innerHTML=nav();$('#view').innerHTML=s.tab==='auto'?panelAuto():s.tab==='person'?panelPerson():s.tab==='outfit'?panelOutfit():s.tab==='hair'?panelHair():s.tab==='makeup'?panelMakeup():s.tab==='acc'?panelAcc():s.tab==='scene'?panelScene():panelResult();save()}catch(e){console.error(e);$('#view').innerHTML='<section class="section"><h2>表示を回復できませんでした</h2><p>ページを再読み込みしてください。設定は保存済みです。</p></section>'}}
+
+window.chooseOutput=(x)=>{s.outputMode=x;save();render()};
+window.goOutput=(x)=>{s.outputMode=x;s.tab='result';save();render();window.scrollTo(0,0)};
+window.personPreset=(type)=>{
+ if(type==='face')Object.assign(s,{framing:'顔アップ',shoeNeed:'指定はするが画面外でよい',personPose:'首から上の自然な表情、わずかに横を向く。',angle:'左斜め45度'});
+ if(type==='full')Object.assign(s,{framing:'全身・靴まで',shoeNeed:'見せる',personPose:'直立して両腕を自然に下ろす。',topVolume:2,curlLevel:2,bangs:'自然な前髪',eyelashShape:'目尻がやや長い束感',angle:'左斜め45度'});
+ if(type==='back')Object.assign(s,{framing:'上半身',shoeNeed:'指定はするが画面外でよい',personPose:'体を背面に向け、頭だけ自然に振り返る。',angle:'背面から振り向く'});
+ s.mode='manual';save();render()};
+window.fixWarnings=()=>{if(s.framing!=='全身・靴まで'&&s.shoeNeed==='見せる')s.shoeNeed='指定はするが画面外でよい';if(s.outputMode==='scene'&&/ホール|エレベーター|室内|店内|待機室|控室|ソファ|自宅|美容院|カフェ|更衣室|車内|洗面所/.test(s.place)&&/歩道から|街角から|屋外から/.test(s.camera))s.camera='現場内の撮影者、2m先からiPhoneスナップ';if(s.tattoo==='T00')s.tattooNeed='衣装から自然に見える範囲のみ';if(/ロングコート|ダウン|パーカー/.test(O[s.outfit]?.name||''))s.tattooNeed='衣装から自然に見える範囲のみ';if(Number(s.color.substring(1))<=3&&Number(s.bright)>=8)s.bright=4;save();render();toast('矛盾を補正しました')};
+window.downloadPrompt=()=>{const blob=new Blob([buildPrompt()],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='saki_precise_prompt_'+(s.outputMode==='person'?'person':'scene')+'.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)};
+
+window.change=(key,value)=>{field(key,value);if(['color'].includes(key))render()};window.updateRange=(key,val)=>{field(key,Number(val));const el=$('#nv-'+key);if(el)el.textContent=val};window.updateM=(i,val)=>{s.m[i]=Number(val);s.makeup='CUSTOM';save();$('#mv-'+i).textContent=val};window.field=field;window.setMode=setMode;window.setTab=setTab;window.stageApply=stageApply;window.pick=pick;window.changeOutType=t=>{s.outfitType=t;s.outfitGroup=t==='casual'?'day':t==='suit'?'black':'plain';save();render()};window.groupOut=g=>{s.outfitGroup=g;save();render()};window.setHairView=v=>{s.hairView=v;save();render()};window.applyMakeup=i=>{let m=makeupPresets[i];s.makeup=m[0];s.m=[...m[2]];if(i===4)s.shadowColor='ブルー・ラベンダー';if(i===5)s.shadowColor='ローズブラウン';if(i===3)s.shadowColor='ブルーグレー';save();render()};window.setAccView=v=>{s.accView=v;save();render()};window.chooseGroup=g=>{s.group=g;s.filter='';save();render()};window.chooseScene=id=>{setScene(id);save();render()};window.filterScenes=v=>{s.filter=v;save();let old=document.activeElement.selectionStart;let container=$('#sceneItems');const q=v.trim().toLowerCase();const rr=q?SCENES.flatMap(x=>x.items).filter(x=>(x.name+' '+x.place+' '+x.action).toLowerCase().includes(q)):SCENES.find(x=>x.id===s.group)?.items||[];container.innerHTML=rr.map(x=>`<button class="sceneitem ${s.scene===x.id?'active':''}" onclick="chooseScene('${x.id}')"><strong>${esc(x.name)} ${s.scene===x.id?'✓':''}</strong><small>${esc(x.place)}</small><small>${esc(x.action)}</small></button>`).join('')||'<p class="muted">見つかりませんでした。</p>';let n=container.previousElementSibling;if(n)n.textContent=rr.length+' シーン表示'};window.setCamera=x=>{s.camera=x+'。iPhoneの自然な縦9:16スナップ';save();render()};window.setStyle=x=>{s.style=x;save();render()};window.togglePrompt=()=>{s.showPrompt=!s.showPrompt;save();$('#promptText').classList.toggle('hidden',!s.showPrompt)};
+async function copyText(t){try{await navigator.clipboard.writeText(t)}catch(e){const el=document.createElement('textarea');el.value=t;el.style.position='fixed';el.style.opacity='0';document.body.appendChild(el);el.focus();el.select();document.execCommand('copy');el.remove()}toast('コピーしました ✓')}
+window.copyPrompt=()=>copyText(buildPrompt());window.copySummary=()=>copyText('早紀・変貌シミュレーター 設定\n'+STAGES.find(x=>x.id===s.stage)?.name+'\n'+H[s.hair]?.name+' / '+COLORS.find(x=>x[0]===s.color)?.[1]+'\n'+O[s.outfit]?.id+' '+O[s.outfit]?.name+'\nメイク '+s.m.join('/')+'\n刺青 '+ADDONS.tattoo.find(x=>x[0]===s.tattoo)?.[1]+'\n場所 '+s.place+'\n仕草 '+s.action);
+window.loadRef=(type,file)=>{if(!file)return;if(file.size>12*1024*1024){toast('画像は12MB以下にしてください');return}const reader=new FileReader();reader.onload=()=>{referenceImages[type]=reader.result;const d=$('#ref-'+type);if(d)d.innerHTML=`<img class="refphoto" src="${reader.result}">`;toast('端末内で参考画像を表示しました')};reader.readAsDataURL(file)};
+window.downloadSettings=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(s,null,2)],{type:'application/json'}));a.download='saki_simulator_settings.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+window.importSettings=file=>{if(!file)return;const r=new FileReader();r.onload=()=>{try{const v=JSON.parse(r.result);if(v&&typeof v==='object'&&v.outfit&&v.color){s={...DEFAULT,...v};render();toast('設定を読み込みました')}else throw Error('bad')}catch(e){toast('設定ファイルの読み込みに失敗しました')}};r.readAsText(file)};
+window.resetAll=()=>{if(!confirm('すべての選択設定を初期状態に戻しますか？'))return;s={...DEFAULT};save();render()};
+function toast(x){let e=document.getElementById('toast');if(!e){e=document.createElement('div');e.id='toast';e.style.cssText='position:fixed;z-index:60;bottom:95px;left:50%;transform:translateX(-50%);background:#ffe0a9;color:#2c1b24;padding:10px 16px;border-radius:40px;font-size:13px;font-weight:bold;box-shadow:0 5px 28px #0009;white-space:nowrap';document.body.appendChild(e)}e.textContent=x;clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>e.remove(),2200)}
+$('#btnAuto').addEventListener('click',()=>setMode('auto'));$('#btnManual').addEventListener('click',()=>setMode('manual'));
+// Initialize saved state; no background uploads or remote API calls.
+render();
+</script></body></html>
